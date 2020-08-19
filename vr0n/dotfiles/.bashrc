@@ -96,11 +96,7 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-
+# TAKE THE BELOW ADVICE... EVENTUALLY
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -123,6 +119,49 @@ fi
 
 figlet -f $(/usr/bin/ls /usr/share/figlet/ | sort -R | head -n 1) $(whoami) | lolcat
 
+# define functions for stuff
+# git commit function
+function gcom() {
+	printf 'Enter commit message:\n'
+	read mess
+
+        git commit -m "$mess"
+}
+
+# git remote add function
+function rset() {
+	printf 'Enter remote url/ssh path:\n'
+        read remote
+
+	git remote add origin $remote
+}
+
+# extraction function i stole from DT
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   unzstd $1    ;;      
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
 alias tp="trash-put"
 alias tl="trash-list"
 alias te="trash-empty"
@@ -140,3 +179,12 @@ alias talist="~/.config/talist/src/talist"
 alias obs="LIBGL_ALWAYS_SOFTWARE=1 obs &"
 alias build="make clean && make && sudo make install"
 alias irc="ssh irc"
+alias mv="mv -i"
+alias rm="printf 'stop using rm... use tp instead...\n'; false"
+
+# shortcuts for git
+alias gc="git clone" 
+alias gs="git status" 
+alias ga="git add ."
+alias gp="git push origin master"
+alias gall="ga && gcom && gp"
