@@ -183,8 +183,8 @@ alias mv="mv -i"
 alias rm="printf 'stop using rm... use tp instead...\n'; false"
 
 # shortcuts for git
-alias gc="git clone" 
-alias gs="git status" 
-alias ga="git add ."
-alias gp="git push origin master"
-alias gall="ga && gcom && gp"
+alias clone="git clone" 
+alias add="git add ."
+alias commit="git commit -m"
+alias push="git push origin master"
+alias gall="add && gcom && push"
