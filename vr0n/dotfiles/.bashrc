@@ -96,11 +96,7 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-
+# TAKE THE BELOW ADVICE... EVENTUALLY
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -123,20 +119,87 @@ fi
 
 figlet -f $(/usr/bin/ls /usr/share/figlet/ | sort -R | head -n 1) $(whoami) | lolcat
 
-alias tp="trash-put"
-alias tl="trash-list"
-alias te="trash-empty"
-alias ls="ls -lah --color=auto"
+# define functions for stuff
+# "fix" cd so it ls-es everytime
+function cd() {
+	if [ -z "$1" ]; then
+		builtin cd ~ && ls -lah --color=auto
+	else
+		builtin cd "$1" && ls -lah --color=auto
+	fi
+}
+
+# extraction function i stole from DT
+function ex()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   unzstd $1    ;;      
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# git commit function
+function gcom() {
+	printf 'Enter commit message:\n'
+	read mess
+
+        git commit -m "$mess"
+}
+
+# git remote add function
+function rset() {
+	printf 'Enter remote url/ssh path:\n'
+        read remote
+
+	git remote add origin $remote
+}
+
+alias ..="cd .."
+alias build="make clean && make && sudo make install"
+alias burpsuite="BurpSuiteCommunity"
 alias grab="sudo apt-get install -y"
+alias irc="ssh irc"
+alias ls="ls -lah --color=auto"
+alias maria="echo I LOVE MARIA!!!!"
+alias mv="mv -i"
+alias obs="LIBGL_ALWAYS_SOFTWARE=1 obs &"
+alias p="upower --dump | grep 'percentage\|state' | sort | uniq"
+alias psa="ps aux"
+alias psg="ps aux | grep"
 alias purge="sudo apt purge -y"
+alias remove="sudo apt autoremove -y"
+alias rm="printf 'stop using rm... use tp instead...\n'; false"
 alias search="sudo apt search"
+alias talist="~/.config/talist/src/talist"
+alias te="trash-empty"
+alias tl="trash-list"
+alias tp="trash-put"
 alias update="sudo apt update -y"
 alias upgrade="sudo apt upgrade -y"
-alias remove="sudo apt autoremove -y"
-alias burpsuite="BurpSuiteCommunity"
-alias p="upower --dump | grep 'percentage\|state' | sort | uniq"
-alias maria="echo I LOVE MARIA!!!!"
-alias talist="~/.config/talist/src/talist"
-alias obs="LIBGL_ALWAYS_SOFTWARE=1 obs &"
-alias build="make clean && make && sudo make install"
-alias irc="ssh irc"
+alias when="history | grep"
+
+# shortcuts for git
+alias add="git add ."
+alias clone="git clone" 
+alias commit="git commit -m"
+alias gall="add && gcom && push"
+alias pull="git pull origin"
+alias push="git push origin master"
+alias set="git remote add origin"
