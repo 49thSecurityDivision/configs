@@ -1,6 +1,6 @@
 [submodule "elrey"]
 	path = elrey
 	url = https://github.com/elreydetoda/all-linux-tings
-[submodule "rogueone"]
-	path = rogueone
+[submodule "rougeone"]
+	path = rougeone
 	url = https://github.com/ambera-dev/dots
