@@ -1,3 +1,6 @@
 [submodule "elrey"]
 	path = elrey
 	url = https://github.com/elreydetoda/all-linux-tings
+[submodule "rogueone"]
+	path = rogueone
+	url = https://github.com/ambera-dev/dots
